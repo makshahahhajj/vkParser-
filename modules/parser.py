@@ -1,13 +1,18 @@
 import time
-import selenium.webdriver.common.desired_capabilities
+from selenium.webdriver.common.desired_capabilities import *
 from modules import vk_class
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 def parser():
-        # ua = dict(DesiredCapabilities.CHROME)
-        # options = webdriver.ChromeOptions()
-        # options.add_argument('headless')
-        # options.add_argument('window-size=1920x935')
-        # driver  = webdriver.Chrome('C:/chromedriver.exe',chrome_options=options)
-        vk = vk_class.Vk_parser()
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('log-level=3')  # Set the log level of chromedriver
+
+
+        driver = webdriver.Chrome( 'C:/chromedriver.exe',chrome_options=chrome_options)
+
+        vk = vk_class.Vk_parser(driver)
         print('Для выхода напишите exit')
         while True:
             print('Type vk-id')
@@ -16,7 +21,7 @@ def parser():
                 break
             else:
                 vk.load_page(str(id))
-                vk.parse_page()   
+                vk.parse_page()
 
         vk.stop_parser()
 
