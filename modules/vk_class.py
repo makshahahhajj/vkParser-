@@ -26,19 +26,18 @@ class Vk_parser(object):
     def parse_page(self):
         name = self.driver.find_element_by_class_name('page_name')
         print(name.text)
-        self.__parseMainInfo()
+        self.__parseInfo()
 
-    
     def stop_parser(self):
         self.driver.quit()
 
-    def  __parseMainInfo(self):
+    def  __parseInfo(self):
         try:
             main_info = self.driver.find_element_by_id('profile_short')
             anotations = self.driver.find_elements_by_class_name('label')
-            info_items = main_info.find_elements_by_class_name('labeled')
+            info_items = self.driver.find_elements_by_class_name('labeled')
             for item in info_items:
-                print(anotations[info_items.index(item)].text + item.text)
+                print(anotations[info_items.index(item)].get_attribute("textContent") + item.get_attribute("textContent"))
         except Exception:
             print('No info')
 
